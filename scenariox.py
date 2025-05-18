@@ -32,3 +32,33 @@ class QLearningAgent:
         td_target = reward + self.gamma * self.q_table[new_state][best_next_action]
         td_error = td_target - self.q_table[state][action]
         self.q_table[state][action] += self.alpha * td_error
+        
+    def train(self, episodes=1000):
+        rewards = []
+        for episode in range(episodes):
+            self.env.newEpoch()
+            state = self.get_state_key(self.env.getPosition(), self.env.getPackagesRemaining())
+            total_reward = 0
+            done = False
+            
+            while not done:
+                action = self.choose_action(state)
+                cell_type, new_pos, packages_left, done = self.env.takeAction(action)
+                
+                #reward function
+                if cell_type > 0: #collected packages
+                    reward = 10
+                elif new_pos == self.env.getPosition(): #hit wall
+                    reward = -1
+                else:
+                    reward = -1 #step penalty
+                    
+                new_state = self.get_state_key(now_pos, packages_left)
+                self.update_q_table(state, action, reward, new_state)
+                total_reward += reward
+                state = new_state
+                
+            reward.append(total_reward)
+            self.epsilon = max(self.epsilon_min, self.epsilon * self.epsilon_decay)
+            
+        return rewards
