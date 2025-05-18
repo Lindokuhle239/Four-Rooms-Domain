@@ -79,6 +79,18 @@ def compare_exploration_strategies():
     agent_fixed.epsilon = 0.1 #fixed exploration rate
     rewards_fixed = agent_fixed.train(exploration_strategy='fixed')
     
+    #plot results
+    plt.figure(figsize=(10, 5))
+    plt.plot(rewards_decay, label='ε-decay (1.0->0.01)')
+    plt.plot(rewards_fixed, label='ε-fixed (0.1)')
+    plt.xlabel('Episodes')
+    plt.ylabel('Total Rewards')
+    plt.title('Exploration Strategy Comparison (Scenario 1)')
+    plt.legend()
+    plt.savefig('exploration_comparison.jpg')
+    plt.show()
+    
+    
 def main():
     parser = argparse.ArgumentParser()
     parser.add_argument('--scenario', type=str, choices=['simple', 'multi', 'rgb'], required=True)
