@@ -65,7 +65,8 @@ class QLearningAgent:
             if exploration_strategy == 'decay':
                 self.epsilon = max(self.epsilon_min, self.epsilon * self.epsilon_decay)
             elif exploration_strategy == 'fixed':
-                pass #keep epsilon constant
+                self.epsilon = max(0.05, 1.0 / (episode + 1)) #gradually reduce ε
+                #pass #keep epsilon constant
             
             if episode % 100 == 0:
                 print(f"Episode {episode}, Reward: {total_reward}, ε: {self.epsilon:.3f}")
