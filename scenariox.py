@@ -72,6 +72,9 @@ class QLearningAgent:
             
         return rewards
     
+def smooth_rewards(rewards, window=50):
+    return np.convolve(rewards, np.ones(window)/window, mode='valid')
+
 def compare_exploration_strategies():
     #train with ε-decay
     agent_decay = QLearningAgent('simple')
