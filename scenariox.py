@@ -48,11 +48,11 @@ class QLearningAgent:
                 
                 #reward function
                 if cell_type > 0: #collected packages
-                    reward = 10
+                    reward = 20
                 elif new_pos == self.env.getPosition(): #hit wall
-                    reward = -1
+                    reward = -0.5
                 else:
-                    reward = -1 #step penalty
+                    reward = -0.5 #step penalty
                     
                 new_state = self.get_state_key(new_pos, packages_left)
                 self.update_q_table(state, action, reward, new_state)
