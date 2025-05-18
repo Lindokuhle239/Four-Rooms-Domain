@@ -60,7 +60,12 @@ class QLearningAgent:
                 state = new_state
                 
             rewards.append(total_reward)
-            self.epsilon = max(self.epsilon_min, self.epsilon * self.epsilon_decay)
+            
+            #update epsilon based on strategy
+            if exploration_strategy == 'decay':
+                self.epsilon = max(self.epsilon_min, self.epsilon * self.epsilon_decay)
+            elif exploration_strategy == 'fixed':
+                pass #keep epsilon constant
             
         return rewards
     
