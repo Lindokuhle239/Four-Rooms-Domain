@@ -1,6 +1,7 @@
 import numpy as np
 import argparse
 from FourRooms import FourRooms
+import matplotlib as plt
 
 class QLearningAgent:
     def __init__(self, scenario, stochastic=False):
@@ -18,7 +19,7 @@ class QLearningAgent:
     
     def choose_action(self, state):
         if np.random.rand() < self.epsilon:
-            return np.random.choice(self.action) #exploration
+            return np.random.choice(self.actions) #exploration
         else:
             return np.argmax(self.q_table.get(state, np.zeros(len(self.actions)))) #exploitation
         
@@ -53,12 +54,12 @@ class QLearningAgent:
                 else:
                     reward = -1 #step penalty
                     
-                new_state = self.get_state_key(now_pos, packages_left)
+                new_state = self.get_state_key(new_pos, packages_left)
                 self.update_q_table(state, action, reward, new_state)
                 total_reward += reward
                 state = new_state
                 
-            reward.append(total_reward)
+            rewards.append(total_reward)
             self.epsilon = max(self.epsilon_min, self.epsilon * self.epsilon_decay)
             
         return rewards
