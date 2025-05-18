@@ -1,7 +1,7 @@
 import numpy as np
 import argparse
 from FourRooms import FourRooms
-import matplotlib as plt
+import matplotlib.pyplot as plt
 
 class QLearningAgent:
     def __init__(self, scenario, stochastic=False):
@@ -11,7 +11,7 @@ class QLearningAgent:
         self.alpha = 0.1 #learning rate
         self.gamma = 0.9 #discount factor
         self.epsilon = 1.0 #initial exploration rate
-        self.epsilon_decay = 0.995
+        self.epsilon_decay = 0.99
         self.epsilon_min = 0.01
         
     def get_state_key(self, pos, package_left):
@@ -106,4 +106,5 @@ def main():
     #plotting code...
     
 if __name__ == "__main__":
-    main()
+    compare_exploration_strategies()
+    #main()
