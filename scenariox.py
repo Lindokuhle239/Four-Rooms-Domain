@@ -62,3 +62,20 @@ class QLearningAgent:
             self.epsilon = max(self.epsilon_min, self.epsilon * self.epsilon_decay)
             
         return rewards
+    
+def main():
+    parser = argparse.ArgumentParser()
+    parser.add_argument('--scenario', type=str, choices=['simple', 'multi', 'rgb'], required=True)
+    parser.add_argument('--stochastic', action='store_true')
+    args = parser.parse_args()
+    
+    agents = QLearningAgent(args.scenario, args.stochastic)
+    rewards = args.train()
+    
+    #save final path and plot rewards
+    agent.env.showPath(-1, savefig='final_path.jpg')
+    
+    #plotting code...
+    
+if __name__ == "__main__":
+    main()
