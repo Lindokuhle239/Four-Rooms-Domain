@@ -69,6 +69,16 @@ class QLearningAgent:
             
         return rewards
     
+def compare_exploration_strategies():
+    #train with ε-decay
+    agent_decay = QLearningAgent('simple')
+    rewards_decay = agent_decay.train(exploration_strategy='decay')
+    
+    #train with fixed ε
+    agent_fixed = QLearningAgent('simple')
+    agent_fixed.epsilon = 0.1 #fixed exploration rate
+    rewards_fixed = agent_fixed.train(exploration_strategy='fixed')
+    
 def main():
     parser = argparse.ArgumentParser()
     parser.add_argument('--scenario', type=str, choices=['simple', 'multi', 'rgb'], required=True)
