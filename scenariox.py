@@ -21,3 +21,14 @@ class QLearningAgent:
             return np.random.choice(self.action) #exploration
         else:
             return np.argmax(self.q_table.get(state, np.zeros(len(self.actions)))) #exploitation
+        
+    def update_q_table(self, state, action, reward, new_state):
+        if state not in self.q_table:
+            self.q_table[state] = np.zeros(len(self.actions))
+        if new_state not in self.q_table:
+            self.q_table[new_state] = np.zeros(len(self.actions))
+            
+        best_next_action = np.argmax(self.q_table[new_state])
+        td_target = reward + self.gamma * self.q_table[new_state][best_next_action]
+        td_error = td_target - self.q_table[state][action]
+        self.q_table[state][action] += self.alpha * td_error
