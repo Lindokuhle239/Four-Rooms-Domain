@@ -34,7 +34,7 @@ class QLearningAgent:
         td_error = td_target - self.q_table[state][action]
         self.q_table[state][action] += self.alpha * td_error
         
-    def train(self, episodes=1000, exploration_strategy='decay'):
+    def train(self, episodes=2000, exploration_strategy='decay'):
         rewards = []
         for episode in range(episodes):
             self.env.newEpoch()
