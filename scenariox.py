@@ -15,3 +15,9 @@ class QLearningAgent:
         
     def get_state_key(self, pos, package_left):
         return (*pos, package_left)
+    
+    def choose_action(self, state):
+        if np.rand() < self.epsilon:
+            return np.random.choice(self.action) #exploration
+        else:
+            return np.argmax(self.q_table.get(state, np.zeros(len(self.actions)))) #exploitation
