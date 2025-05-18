@@ -11,7 +11,7 @@ class QLearningAgent:
         self.alpha = 0.2 #learning rate
         self.gamma = 0.9 #discount factor
         self.epsilon = 1.0 #initial exploration rate
-        self.epsilon_decay = 0.99
+        self.epsilon_decay = 0.998
         self.epsilon_min = 0.01
         
     def get_state_key(self, pos, package_left):
