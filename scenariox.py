@@ -85,10 +85,15 @@ def compare_exploration_strategies():
     agent_fixed.epsilon = 0.1 #fixed exploration rate
     rewards_fixed = agent_fixed.train(exploration_strategy='fixed')
     
+    #smooth rewards
+    window = 50
+    smooth_decay = smooth_rewards(rewards_decay, window)
+    smooth_fixed = smooth_rewards(rewards_fixed, window)
+    
     #plot results
     plt.figure(figsize=(10, 5))
-    plt.plot(rewards_decay, label='ε-decay (1.0->0.01)')
-    plt.plot(rewards_fixed, label='ε-fixed (0.1)')
+    plt.plot(smooth_decay, label='ε-decay (1.0->0.01)')
+    plt.plot(smooth_fixed, label='ε-fixed (0.1)')
     plt.xlabel('Episodes')
     plt.ylabel('Total Rewards')
     plt.title('Exploration Strategy Comparison (Scenario 1)')
