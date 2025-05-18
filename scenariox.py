@@ -17,7 +17,7 @@ class QLearningAgent:
         return (*pos, package_left)
     
     def choose_action(self, state):
-        if np.rand() < self.epsilon:
+        if np.random.rand() < self.epsilon:
             return np.random.choice(self.action) #exploration
         else:
             return np.argmax(self.q_table.get(state, np.zeros(len(self.actions)))) #exploitation
@@ -69,8 +69,8 @@ def main():
     parser.add_argument('--stochastic', action='store_true')
     args = parser.parse_args()
     
-    agents = QLearningAgent(args.scenario, args.stochastic)
-    rewards = args.train()
+    agent = QLearningAgent(args.scenario, args.stochastic)
+    rewards = agent.train()
     
     #save final path and plot rewards
     agent.env.showPath(-1, savefig='final_path.jpg')
