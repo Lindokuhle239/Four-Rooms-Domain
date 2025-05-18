@@ -67,6 +67,9 @@ class QLearningAgent:
             elif exploration_strategy == 'fixed':
                 pass #keep epsilon constant
             
+            if episode % 100 == 0:
+                print(f"Episode {episode}, Reward: {total_reward}, ε: {self.epsilon:.3f}")
+            
         return rewards
     
 def compare_exploration_strategies():
