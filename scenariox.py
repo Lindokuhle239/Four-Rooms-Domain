@@ -69,7 +69,7 @@ class QLearningAgent:
                 #pass #keep epsilon constant
             
             if episode % 100 == 0:
-                print(f"Episode {episode}, Reward: {total_reward}, ε: {self.epsilon:.3f}")
+                print(f"Episode {episode}, Reward: {total_reward:.3f}, ε: {self.epsilon:.3f}")
                             
         return rewards
     
@@ -93,8 +93,8 @@ def compare_exploration_strategies():
     
     #plot results
     plt.figure(figsize=(10, 5))
-    plt.plot(smooth_decay, label='ε-decay (1.0->0.01)')
-    plt.plot(smooth_fixed, label='ε-fixed (0.1)')
+    plt.plot(smooth_decay, label='ε-decay (0.998)')
+    plt.plot(smooth_fixed, label='ε-fixed (1.0->0.05)')
     plt.xlabel('Episodes')
     plt.ylabel('Total Rewards')
     plt.title('Exploration Strategy Comparison (Scenario 1)')
@@ -110,13 +110,15 @@ def main():
     args = parser.parse_args()
     
     agent = QLearningAgent(args.scenario, args.stochastic)
-    rewards = agent.train()
+    
+    #rewards = agent.train()
+    rewards = agent.train(episodes=2000)
     
     #save final path and plot rewards
-    agent.env.showPath(-1, savefig='final_path.jpg')
+    #agent.env.showPath(-1, savefig='final_path.jpg')
+    agent.env.showPath(-1, savefig=f"final_path_{args.scenario}.jpg")
     
-    #plotting code...
     
 if __name__ == "__main__":
-    compare_exploration_strategies()
-    #main()
+    #compare_exploration_strategies()
+    main()
