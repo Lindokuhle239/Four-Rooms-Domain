@@ -14,6 +14,9 @@ class QLearningAgent:
         self.epsilon_decay = 0.998
         self.epsilon_min = 0.01
         
+        self.expected_order = [FourRooms.RED, FourRooms.GREEN, FourRooms.BLUE] if scenario == 'rgb' else None
+        self.collected = []
+        
     def get_state_key(self, pos, package_left):
         return (*pos, package_left)
     
@@ -38,6 +41,7 @@ class QLearningAgent:
         rewards = []
         for episode in range(episodes):
             self.env.newEpoch()
+            self.collected = [] #reset collected packages per epoch
             state = self.get_state_key(self.env.getPosition(), self.env.getPackagesRemaining())
             total_reward = 0
             done = False
@@ -46,6 +50,17 @@ class QLearningAgent:
                 action = self.choose_action(state)
                 cell_type, new_pos, packages_left, done = self.env.takeAction(action)
                 
+                #scenario 3: check package order
+                if self.expected_order and cell_type > 0:
+                    if cell_type != self.expected_order[len(self.collected)]:
+                        reward = -10
+                        done = True
+                    else:
+                        reward = 10
+                        self.collected.append(cell_type)
+                else:
+                    reward = -1 #step penalty
+                
                 #reward function
                 if cell_type > 0: #collected packages
                     reward = 10
@@ -53,6 +68,7 @@ class QLearningAgent:
                     reward = -0.1
                 else:
                     reward = -0.1 #step penalty
+                
                     
                 new_state = self.get_state_key(new_pos, packages_left)
                 self.update_q_table(state, action, reward, new_state)
