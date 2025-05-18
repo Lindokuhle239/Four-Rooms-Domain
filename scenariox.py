@@ -50,9 +50,9 @@ class QLearningAgent:
                 if cell_type > 0: #collected packages
                     reward = 20
                 elif new_pos == self.env.getPosition(): #hit wall
-                    reward = -0.5
+                    reward = -0.1
                 else:
-                    reward = -0.5 #step penalty
+                    reward = -0.1 #step penalty
                     
                 new_state = self.get_state_key(new_pos, packages_left)
                 self.update_q_table(state, action, reward, new_state)
@@ -70,7 +70,7 @@ class QLearningAgent:
             
             if episode % 100 == 0:
                 print(f"Episode {episode}, Reward: {total_reward}, ε: {self.epsilon:.3f}")
-            
+                            
         return rewards
     
 def smooth_rewards(rewards, window=50):
