@@ -48,7 +48,7 @@ class QLearningAgent:
                 
                 #reward function
                 if cell_type > 0: #collected packages
-                    reward = 20
+                    reward = 10
                 elif new_pos == self.env.getPosition(): #hit wall
                     reward = -0.1
                 else:
